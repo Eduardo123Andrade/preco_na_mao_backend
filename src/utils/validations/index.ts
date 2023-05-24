@@ -1,1 +1,0 @@
-export { validateCPF } from "./validateCpf"
