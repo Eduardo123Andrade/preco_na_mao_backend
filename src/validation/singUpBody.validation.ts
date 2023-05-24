@@ -1,9 +1,8 @@
-import { User } from "prisma/prisma-client";
-import { z } from "zod"
-import { validateCPF } from "../utils/validations";
-import { UserData } from "../interface";
+import { z } from "zod";
+import { SingUp } from "../interface";
+import { validateCPF } from "../utils";
 
-export const validateSingUpBody = (data: unknown): UserData => {
+export const validateSingUpSchemaBody = (data: unknown): SingUp => {
   const bodySchema = z.object({
     cpf: z.string().refine(validateCPF, "CPF inválido"),
     name: z.string(),

@@ -1,2 +1,2 @@
 export { validateLoginBodySchema } from "./loginBody.validation"
-export { validateSingUpBody } from "./singUpBodyValidation"
+export { validateSingUpSchemaBody } from "./singUpBody.validation"

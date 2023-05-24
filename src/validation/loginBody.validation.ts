@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Login } from "../interface";
-import { validateCPF } from "../utils/validations";
+import { validateCPF } from "../utils";
 
 
 export const validateLoginBodySchema = (data: unknown): Login => {
