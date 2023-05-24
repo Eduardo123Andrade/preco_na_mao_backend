@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { SingUpService } from "../service";
-import { validateSingUpBody } from "../validation";
+import { validateLoginBodySchema, validateSingUpBody } from "../validation";
 
 
 const singUp = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -12,6 +12,15 @@ const singUp = async (request: FastifyRequest, reply: FastifyReply) => {
 }
 
 
+const login = async (request: FastifyRequest, reply: FastifyReply) => {
+  const loginData = validateLoginBodySchema(request.body)
+
+  const user = await SingUpService.login(loginData)
+
+  return reply.status(200).send({ user })
+}
+
 export const AuthController = {
   singUp,
+  login
 }
