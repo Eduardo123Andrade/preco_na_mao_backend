@@ -1,1 +1,1 @@
-export { formatValidationError } from "./handleError"
+export { formatValidationError } from "./formatValidationError"
