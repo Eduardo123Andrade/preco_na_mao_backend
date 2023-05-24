@@ -1,0 +1,1 @@
+export { validateSingUpBody } from "./singUpBodyValidation"
