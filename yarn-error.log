@@ -1,5 +1,5 @@
 Arguments: 
-  /home/lordstark/.nvm/versions/node/v16.20.0/bin/node /usr/bin/yarn add httpStatus
+  /home/lordstark/.nvm/versions/node/v16.20.0/bin/node /usr/bin/yarn add fastify-error-handler
 
 PATH: 
   /home/lordstark/.asdf/shims:/home/lordstark/.asdf/bin:/home/lordstark/.nvm/versions/node/v16.20.0/bin:/home/lordstark/.local/share/zinit/polaris/bin:/home/lordstark/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/lordstark/Android/Sdk/tools:/home/lordstark/Android/Sdk/emulator:/home/lordstark/Android/Sdk/platform-tools:/home/lordstark/Android/Sdk/tools:/home/lordstark/Android/Sdk/emulator:/home/lordstark/Android/Sdk/platform-tools
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.npmjs.org/httpStatus: Not found
+  Error: https://registry.npmjs.org/fastify-error-handler: Not found
       at Request.params.callback [as _callback] (/usr/lib/node_modules/yarn/lib/cli.js:66145:18)
       at Request.self.callback (/usr/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -42,6 +42,7 @@ npm manifest:
       "@prisma/client": "^4.14.1",
       "dotenv": "^16.0.3",
       "fastify": "^4.17.0",
+      "http-status": "^1.6.2",
       "zod": "^3.21.4"
     },
     "devDependencies": {
@@ -534,6 +535,11 @@ Lockfile:
     version "4.5.0"
     resolved "https://registry.yarnpkg.com/get-tsconfig/-/get-tsconfig-4.5.0.tgz#6d52d1c7b299bd3ee9cd7638561653399ac77b0f"
     integrity sha512-MjhiaIWCJ1sAU4pIQ5i5OfOuHHxVo1oYeNsWTON7jxYkod8pHocXeh+SSbmu5OZZZK73B6cbJ2XADzXehLyovQ==
+  
+  http-status@^1.6.2:
+    version "1.6.2"
+    resolved "https://registry.yarnpkg.com/http-status/-/http-status-1.6.2.tgz#6dc05188a9856d67d96e48e8b4fd645c719ce82a"
+    integrity sha512-oUExvfNckrpTpDazph7kNG8sQi5au3BeTo0idaZFXEhTaJKu7GNJCLHI0rYY2wljm548MSTM+Ljj/c6anqu2zQ==
   
   ieee754@^1.2.1:
     version "1.2.1"
