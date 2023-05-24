@@ -1,0 +1,1 @@
+export { validateCPF } from "./validateCpf"
