@@ -1,1 +1,2 @@
-export { UserData } from "./userData.interface"
+export { SingUp } from "./singUp.interface"
+export { Login } from "./login.interface"
