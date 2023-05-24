@@ -1,0 +1,1 @@
+export { SingUpService } from "./singUp.service"
