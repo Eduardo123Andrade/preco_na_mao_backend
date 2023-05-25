@@ -1,6 +1,5 @@
-import httpStatus from "http-status"
-import { CustomError } from "../error/CustomError"
 import { prisma } from "../lib/prisma"
+import { UnauthorizedError } from "../error/UnauthorizedError"
 
 interface CreateTokenData {
   token: string
@@ -25,7 +24,7 @@ const findValidToken = async ({ token, userId }: CreateTokenData) => {
       isValid: true
     }
   }).catch(() => {
-    throw new CustomError(httpStatus.UNAUTHORIZED, "Token invalido")
+    throw new UnauthorizedError("Usuario inválido")
   })
 
   return foundedToken
