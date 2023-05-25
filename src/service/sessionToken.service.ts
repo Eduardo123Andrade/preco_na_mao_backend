@@ -1,10 +1,10 @@
-import fastifyJwt from "@fastify/jwt"
+import httpStatus from "http-status"
+import { CustomError } from "../error/CustomError"
 import { prisma } from "../lib/prisma"
 
 interface CreateTokenData {
   token: string
   userId: string
-  // isValid: boolean
 }
 
 const createToken = async ({ token, userId }: CreateTokenData) => {
@@ -24,6 +24,8 @@ const findValidToken = async ({ token, userId }: CreateTokenData) => {
       user_id: userId,
       isValid: true
     }
+  }).catch(() => {
+    throw new CustomError(httpStatus.UNAUTHORIZED, "Token invalido")
   })
 
   return foundedToken
@@ -43,7 +45,7 @@ const disableToken = async (data: CreateTokenData) => {
     data: { isValid: false }
   })
 
-  return isValid
+  return !isValid
 }
 
 
