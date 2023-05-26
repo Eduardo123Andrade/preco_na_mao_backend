@@ -16,4 +16,15 @@ model User {
   cpf         String @unique
   phoneNumber String
   password    String
+
+  SessionToken SessionToken[]
+}
+
+model SessionToken {
+  id      String  @id @default(uuid())
+  token   String
+  user_id String
+  isValid Boolean @default(true)
+
+  user User @relation(fields: [user_id], references: [id])
 }
