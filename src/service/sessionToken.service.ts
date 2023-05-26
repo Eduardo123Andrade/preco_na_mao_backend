@@ -24,7 +24,7 @@ const findValidToken = async ({ token, userId }: CreateTokenData) => {
       isValid: true
     }
   }).catch(() => {
-    throw new UnauthorizedError("Usuario inválido")
+    throw new UnauthorizedError("Faça login e tente novamente")
   })
 
   return foundedToken
