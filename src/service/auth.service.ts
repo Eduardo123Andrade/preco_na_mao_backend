@@ -41,7 +41,7 @@ const login = async ({ cpf, password }: Login) => {
 
 
 
-export const SingUpService = {
+export const AuthService = {
   auth,
   login
 }

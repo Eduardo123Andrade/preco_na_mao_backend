@@ -1,13 +1,13 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import httpStatus from "http-status";
-import { SessionToken, SingUpService } from "../service";
+import { SessionToken, AuthService } from "../service";
 import { validateLoginBodySchema, validateSingUpSchemaBody } from "../validation";
 
 
 const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
   const data = validateSingUpSchemaBody(request.body)
 
-  const user = await SingUpService.auth(data)
+  const user = await AuthService.auth(data)
 
   return reply.status(httpStatus.CREATED).send({ user })
 }
@@ -16,7 +16,7 @@ const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
 const login = async (request: FastifyRequest, reply: FastifyReply, app: FastifyInstance) => {
   const loginData = validateLoginBodySchema(request.body)
 
-  const user = await SingUpService.login(loginData)
+  const user = await AuthService.login(loginData)
 
   const createdToken = app.jwt.sign({ name: user.name, }, { sub: user.id, expiresIn: "10 days" })
 
