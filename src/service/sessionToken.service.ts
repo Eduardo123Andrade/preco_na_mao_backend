@@ -17,15 +17,15 @@ const createToken = async ({ token, userId }: CreateTokenData) => {
 }
 
 const findValidToken = async ({ token, userId }: CreateTokenData) => {
-  const foundedToken = await prisma.sessionToken.findFirstOrThrow({
+  const foundedToken = await prisma.sessionToken.findFirst({
     where: {
       token: token,
       user_id: userId,
       isValid: true
     }
-  }).catch(() => {
-    throw new UnauthorizedError("Faça login e tente novamente")
   })
+  if (!foundedToken)
+    throw new UnauthorizedError("Faça login e tente novamente")
 
   return foundedToken
 }
