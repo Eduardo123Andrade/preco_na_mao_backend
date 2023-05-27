@@ -1,8 +1,8 @@
-import { NotFoundError } from '../error/NotFoundError';
 import { UnauthorizedError } from '../error/UnauthorizedError';
 import { Login, SingUp } from '../interface';
 import { prisma } from '../lib/prisma';
 import { encoder } from '../utils/encoder';
+import { UserService } from './user.service';
 
 
 const auth = async (data: SingUp) => {
@@ -17,19 +17,8 @@ const auth = async (data: SingUp) => {
   return user
 }
 
-const findUser = async (cpf: string) => {
-  const user = await prisma.user.findFirst({
-    where: { cpf }
-  })
-
-  if (!user)
-    throw new NotFoundError("Usuario não encontrado")
-
-  return user
-}
-
 const login = async ({ cpf, password }: Login) => {
-  const user = await findUser(cpf)
+  const user = await UserService.findUserByCpf(cpf)
 
   const isValid = await encoder.verifyPassword(password, user?.password)
 
@@ -41,7 +30,7 @@ const login = async ({ cpf, password }: Login) => {
 
 
 
-export const SingUpService = {
+export const AuthService = {
   auth,
   login
 }
