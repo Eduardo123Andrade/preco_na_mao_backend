@@ -1,6 +1,7 @@
 import { NotFoundError } from "../error/NotFoundError"
 import { InsertItemsOnMarketplaceList, MarketplaceList } from "../interface"
 import { prisma } from "../lib/prisma"
+import { ProductService } from "./product.service"
 
 const formatProductsToSave = (data: MarketplaceList | InsertItemsOnMarketplaceList) => {
   const mappedList = data.products.map(item => {
@@ -15,6 +16,8 @@ const formatProductsToSave = (data: MarketplaceList | InsertItemsOnMarketplaceLi
 
 
 const createMarketplaceList = async (userId: string, data: MarketplaceList) => {
+  await ProductService.validateAllProducts(data.products)
+
   const products = formatProductsToSave(data)
 
   const result = await prisma.marketplaceList.create({
@@ -33,10 +36,7 @@ const createMarketplaceList = async (userId: string, data: MarketplaceList) => {
 const insertNewItemsOnMarketplaceList = async (userId: string, data: InsertItemsOnMarketplaceList) => {
   const { listId } = data
 
-  console.log({
-    listId,
-    userId
-  })
+  await ProductService.validateAllProducts(data.products)
 
   const foundedList = await prisma.marketplaceList.findFirst({
     where: { user_id: userId, id: listId }
@@ -46,7 +46,6 @@ const insertNewItemsOnMarketplaceList = async (userId: string, data: InsertItems
     throw new NotFoundError("Lista não encontrada")
 
   const products = formatProductsToSave(data)
-
 
   const result = await prisma.marketplaceList.update({
     where: { id: listId },

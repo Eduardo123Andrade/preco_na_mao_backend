@@ -32,7 +32,6 @@ const getListById = async (request: FastifyRequest, reply: FastifyReply) => {
 const insertItemsOnMarketplaceList = async (request: FastifyRequest, reply: FastifyReply) => {
   const { sub: userId } = request.user
   const marketplaceListData = validateInsertItemsMarketPlaceListBodySchema(request.body)
-  const { marketplaceListId } = request.params as any
 
   const marketplaceList = await MarketplaceListService.insertNewItemsOnMarketplaceList(userId, marketplaceListData)
 
