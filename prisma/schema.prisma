@@ -42,7 +42,8 @@ model Product {
   price          Decimal
   marketplace_id String
 
-  marketplace Marketplace @relation(fields: [marketplace_id], references: [id])
+  marketplace               Marketplace                 @relation(fields: [marketplace_id], references: [id])
+  ProductsOnMarketplaceList ProductsOnMarketplaceList[]
 }
 
 model MarketplaceList {
@@ -50,5 +51,16 @@ model MarketplaceList {
   name    String
   user_id String
 
-  user User @relation(fields: [user_id], references: [id])
+  user                      User                        @relation(fields: [user_id], references: [id])
+  ProductsOnMarketplaceList ProductsOnMarketplaceList[]
+}
+
+model ProductsOnMarketplaceList {
+  id                  String @id @default(uuid())
+  quantity            Int
+  marketplace_list_id String
+  product_id          String
+
+  product         Product         @relation(fields: [product_id], references: [id])
+  marketplaceList MarketplaceList @relation(fields: [marketplace_list_id], references: [id])
 }
