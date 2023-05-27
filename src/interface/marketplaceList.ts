@@ -1,6 +1,6 @@
-import { MarketPlaceProducts } from "./marketPlaceProducts"
+import { MarketplaceProducts } from "./marketplaceProducts.interface"
 
 export interface MarketplaceList {
   name: string
-  products: MarketPlaceProducts[]
+  products: MarketplaceProducts[]
 }
