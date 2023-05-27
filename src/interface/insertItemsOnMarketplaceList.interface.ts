@@ -1,6 +1,6 @@
-import { MarketplaceProducts } from "./marketplaceProducts.interface"
+import { MarketplaceListProducts } from "./marketplaceListProducts.interface"
 
 export interface InsertItemsOnMarketplaceList {
   listId: string
-  products: MarketplaceProducts[]
+  products: MarketplaceListProducts[]
 }

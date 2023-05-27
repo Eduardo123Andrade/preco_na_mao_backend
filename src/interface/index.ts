@@ -3,6 +3,6 @@ export { InsertItemsOnMarketplaceList } from "./insertItemsOnMarketplaceList.int
 export { SingUp } from "./singUp.interface"
 export { Login } from "./login.interface"
 export { MarketplaceList } from "./marketplaceList"
-export { MarketplaceProducts } from "./marketplaceProducts.interface"
+export { MarketplaceListProducts } from "./marketplaceListProducts.interface"
 export { UpdatePassword } from "./updatePassword.interface"
 export { UpdateUser } from "./updateUser.interface"
