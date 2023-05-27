@@ -1,4 +1,5 @@
 export { CheckPassword } from "./checkPassword.interface"
+export { InsertItemsOnMarketplaceList } from "./insertItemsOnMarketplaceList.interface"
 export { SingUp } from "./singUp.interface"
 export { Login } from "./login.interface"
 export { MarketplaceList } from "./marketplaceList"
