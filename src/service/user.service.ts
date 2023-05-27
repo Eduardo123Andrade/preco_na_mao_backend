@@ -1,7 +1,7 @@
 import { BadRequestError } from "../error/BadRequestError"
 import { NotFoundError } from "../error/NotFoundError"
 import { UnauthorizedError } from "../error/UnauthorizedError"
-import { UpdatePassword, UpdateUser } from "../interface"
+import { CheckPassword, UpdatePassword, UpdateUser } from "../interface"
 import { prisma } from "../lib/prisma"
 import { encoder } from "../utils/encoder"
 
@@ -30,10 +30,7 @@ const updatePassword = async (userId: string, data: UpdatePassword) => {
   const user = await findUserById(userId)
   const { oldPassword, password, confirmPassword } = data
 
-  const isValid = await encoder.verifyPassword(oldPassword, user.password)
-
-  if (!isValid)
-    throw new UnauthorizedError("Senha invalida")
+  await verifyPassword(oldPassword, user.password)
 
   if (password !== confirmPassword)
     throw new BadRequestError("Dados inválidos")
@@ -56,9 +53,26 @@ const updateUser = async (userId: string, data: UpdateUser) => {
   return user
 }
 
+const verifyPassword = async (password: string, encryptedPassword: string) => {
+  const isValid = await encoder.verifyPassword(password, encryptedPassword)
+
+  if (!isValid)
+    throw new UnauthorizedError("Senha invalida")
+
+  return isValid
+}
+
+const validatePassword = async (userId: string, { password }: CheckPassword) => {
+  const user = await findUserById(userId)
+  await verifyPassword(password, user.password)
+
+  return true
+}
+
 export const UserService = {
   findUserByCpf,
   findUserById,
   updatePassword,
-  updateUser
+  updateUser,
+  validatePassword
 }
