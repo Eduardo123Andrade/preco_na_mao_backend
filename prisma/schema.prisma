@@ -17,7 +17,8 @@ model User {
   phoneNumber String
   password    String
 
-  SessionToken SessionToken[]
+  SessionToken    SessionToken[]
+  MarketplaceList MarketplaceList[]
 }
 
 model SessionToken {
@@ -42,4 +43,12 @@ model Product {
   marketplace_id String
 
   marketplace Marketplace @relation(fields: [marketplace_id], references: [id])
+}
+
+model MarketplaceList {
+  id      String @id @default(uuid())
+  name    String
+  user_id String
+
+  user User @relation(fields: [user_id], references: [id])
 }
