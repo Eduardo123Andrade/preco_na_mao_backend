@@ -8,5 +8,5 @@ export const marketplaceRoutes = async (app: FastifyInstance) => {
   app.get("/marketplace-list/:marketplaceListId", MarketplaceListController.getListById)
 
   app.post("/marketplace-list", MarketplaceListController.create)
-
+  app.put("/marketplace-list", MarketplaceListController.insertItemsOnMarketplaceList)
 }
