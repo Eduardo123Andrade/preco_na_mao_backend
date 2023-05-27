@@ -1,13 +1,16 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import httpStatus from 'http-status';
 import { MarketplaceListService } from "../service";
+import { validateMarketPlaceListBodySchema } from "../validation";
 
-interface RouterParams {
-  marketplaceListId: string
-}
 
-interface CustomRequest extends FastifyRequest {
-  params: RouterParams
+const create = async (request: FastifyRequest, reply: FastifyReply) => {
+  const { sub: userId } = request.user
+  const marketplaceListData = validateMarketPlaceListBodySchema(request.body)
+
+  const marketplaceList = await MarketplaceListService.createMarketplaceList(userId, marketplaceListData)
+
+  return reply.status(httpStatus.OK).send(marketplaceList)
 }
 
 const getAllList = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -19,9 +22,7 @@ const getAllList = async (request: FastifyRequest, reply: FastifyReply) => {
 }
 
 const getListById = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { sub: userId } = request.user
   const { marketplaceListId } = request.params as any
-  console.log({ marketplaceListId })
 
   const marketplaceList = await MarketplaceListService.getMarketplaceListById(marketplaceListId)
 
@@ -29,6 +30,7 @@ const getListById = async (request: FastifyRequest, reply: FastifyReply) => {
 }
 
 export const MarketplaceListController = {
+  create,
   getAllList,
   getListById
 }

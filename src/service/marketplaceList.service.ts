@@ -1,7 +1,28 @@
 import { NotFoundError } from "../error/NotFoundError"
+import { MarketplaceList } from "../interface"
 import { prisma } from "../lib/prisma"
 
 
+const createMarketplaceList = async (userId: string, data: MarketplaceList) => {
+  const mapped = data.products.map(item => {
+    return {
+      quantity: item.quantity,
+      product: { connect: { id: item.id } }
+    }
+  })
+
+  const result = await prisma.marketplaceList.create({
+    data: {
+      name: data.name,
+      user: { connect: { id: userId } },
+      ProductsOnMarketplaceList: {
+        create: mapped,
+      }
+    }
+  })
+
+  return result
+}
 
 const getMarketplaceListByUserId = async (userId: string) => {
   const marketplaceList = await prisma.marketplaceList.findMany({
@@ -12,7 +33,6 @@ const getMarketplaceListByUserId = async (userId: string) => {
 }
 
 const getMarketplaceListById = async (id: string) => {
-
   const marketplaceList = await prisma.marketplaceList.findUnique({
     where: { id },
     select: {
@@ -24,7 +44,8 @@ const getMarketplaceListById = async (id: string) => {
           product: {
             select: {
               id: true,
-              name: true
+              name: true,
+              price: true
             }
           }
         },
@@ -39,7 +60,8 @@ const getMarketplaceListById = async (id: string) => {
     return {
       id: item.product.id,
       name: item.product.name,
-      quantity: item.quantity
+      quantity: item.quantity,
+      price: Number(item.product.price)
     }
   })
 
@@ -54,6 +76,7 @@ const getMarketplaceListById = async (id: string) => {
 
 
 export const MarketplaceListService = {
+  createMarketplaceList,
   getMarketplaceListById,
-  getMarketplaceListByUserId
+  getMarketplaceListByUserId,
 }
