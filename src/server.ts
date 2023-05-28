@@ -5,12 +5,14 @@ import fastifyJwt from "@fastify/jwt";
 import { onRequestHook } from "./hooks/onRequest";
 import { userRoutes } from "./routes/user";
 import { shoppingListRoutes } from "./routes/shoppingList";
+import { marketplaceRoutes } from "./routes/marketplace";
 
 const app = fastify()
 
 app.register(fastifyJwt, { secret: "b4d secr3T!123@@" })
 
 app.register(authRoutes)
+app.register(marketplaceRoutes)
 app.register(userRoutes)
 app.register(shoppingListRoutes)
 
