@@ -8,7 +8,6 @@ import { marketplaceRoutes } from "./routes/marketplace";
 
 const app = fastify()
 
-
 app.register(fastifyJwt, { secret: "b4d secr3T!123@@" })
 
 app.register(authRoutes)
@@ -21,5 +20,6 @@ app.addHook("onRequest", onRequestHook)
 
 
 app.listen({
-  port: 3333
+  port: 3333,
+  host: "0.0.0.0"
 }).then(console.log)
