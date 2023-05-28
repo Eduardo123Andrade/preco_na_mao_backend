@@ -18,7 +18,7 @@ model User {
   password    String
 
   SessionToken    SessionToken[]
-  MarketplaceList MarketplaceList[]
+  MarketplaceList ShoppingList[]
 }
 
 model SessionToken {
@@ -42,25 +42,25 @@ model Product {
   price          Decimal
   marketplace_id String
 
-  marketplace               Marketplace                 @relation(fields: [marketplace_id], references: [id])
-  ProductsOnMarketplaceList ProductsOnMarketplaceList[]
+  marketplace            Marketplace              @relation(fields: [marketplace_id], references: [id])
+  ProductsOnShoppingList ProductsOnShoppingList[]
 }
 
-model MarketplaceList {
+model ShoppingList {
   id      String @id @default(uuid())
   name    String
   user_id String
 
-  user                      User                        @relation(fields: [user_id], references: [id])
-  ProductsOnMarketplaceList ProductsOnMarketplaceList[]
+  user                   User                     @relation(fields: [user_id], references: [id])
+  ProductsOnShoppingList ProductsOnShoppingList[]
 }
 
-model ProductsOnMarketplaceList {
-  id                  String @id @default(uuid())
-  quantity            Int
-  marketplace_list_id String
-  product_id          String
+model ProductsOnShoppingList {
+  id               String @id @default(uuid())
+  quantity         Int
+  shopping_list_id String
+  product_id       String
 
-  product         Product         @relation(fields: [product_id], references: [id])
-  marketplaceList MarketplaceList @relation(fields: [marketplace_list_id], references: [id])
+  product      Product      @relation(fields: [product_id], references: [id])
+  shoppingList ShoppingList @relation(fields: [shopping_list_id], references: [id])
 }
