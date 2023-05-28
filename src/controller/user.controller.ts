@@ -6,6 +6,7 @@ import {
   validateUpdatePasswordBodySchema,
   validateUpdateUserBodySchema
 } from "../validation";
+import { userView } from "../view";
 
 
 const passwordValidation = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -24,7 +25,9 @@ const updateUser = async (request: FastifyRequest, reply: FastifyReply) => {
   const { sub: userId } = request.user
   const user = await UserService.updateUser(userId, userData)
 
-  reply.status(httpStatus.OK).send({ user })
+  const response = userView(user)
+
+  reply.status(httpStatus.OK).send(response)
 }
 
 const updatePassword = async (request: FastifyRequest, reply: FastifyReply) => {
