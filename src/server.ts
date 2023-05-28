@@ -18,7 +18,7 @@ app.register(productRoutes)
 app.register(userRoutes)
 app.register(shoppingListRoutes)
 
-app.setErrorHandler(errorHandler)
+// app.setErrorHandler(errorHandler)
 
 app.addHook("onRequest", onRequestHook)
 

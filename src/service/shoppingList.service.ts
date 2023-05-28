@@ -33,31 +33,6 @@ const createShoppingList = async (userId: string, data: ShoppingList) => {
   return result
 }
 
-const insertNewItemsOnShoppingList = async (userId: string, data: InsertItemsOnShoppingList) => {
-  const { listId } = data
-
-  await ProductService.validateAllProducts(data.products)
-
-  const foundedList = await prisma.shoppingList.findFirst({
-    where: { user_id: userId, id: listId }
-  })
-
-  if (!foundedList)
-    throw new NotFoundError("Lista não encontrada")
-
-  const products = formatProductsToSave(data)
-
-  const result = await prisma.shoppingList.update({
-    where: { id: listId },
-    data: {
-      ProductsOnShoppingList: {
-        create: products,
-      }
-    }
-  })
-  return result
-}
-
 const getShoppingListByUserId = async (userId: string) => {
   const shoppingList = await prisma.shoppingList.findMany({
     where: { user_id: userId },
@@ -125,9 +100,36 @@ const getShoppingListById = async (id: string) => {
   return obj
 }
 
+const insertOrUpdateItems = async (userId: string, data: InsertItemsOnShoppingList) => {
+  const { products, listId } = data
+
+  const promises = products.map(({ id, quantity }) => {
+    return prisma.productsOnShoppingList.upsert({
+      where: {
+        product_id_shopping_list_id: {
+          shopping_list_id: listId,
+          product_id: id
+        }
+      },
+      create: {
+        quantity,
+        shopping_list_id: listId,
+        product_id: id,
+      },
+      update: {
+        quantity,
+      },
+    });
+  });
+
+  const result = await Promise.all(promises)
+
+  return result
+}
+
 export const ShoppingListService = {
   createShoppingList,
   getShoppingListById,
   getShoppingListByUserId,
-  insertNewItemsOnShoppingList
+  insertOrUpdateItems
 }
