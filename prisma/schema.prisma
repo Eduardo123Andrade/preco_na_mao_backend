@@ -62,7 +62,7 @@ model ProductsOnShoppingList {
   product_id       String
 
   product      Product      @relation(fields: [product_id], references: [id])
-  shoppingList ShoppingList @relation(fields: [shopping_list_id], references: [id])
+  shoppingList ShoppingList @relation(fields: [shopping_list_id], references: [id], onDelete: Cascade)
 
   @@unique([product_id, shopping_list_id])
 }
