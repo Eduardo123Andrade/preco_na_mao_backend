@@ -21,13 +21,12 @@ const login = async (request: FastifyRequest, reply: FastifyReply, app: FastifyI
   const createdToken = app.jwt.sign({ name: user.name, }, { sub: user.id, expiresIn: "10 days" })
 
   const { token } = await SessionToken.createToken({ token: createdToken, userId: user.id })
+  const { password, ...rest } = user
 
-  return reply.status(httpStatus.OK).send({ user, token })
+  return reply.status(httpStatus.OK).send({ token, ...rest })
 }
 
 const logout = async (request: FastifyRequest, reply: FastifyReply) => {
-  await request.jwtVerify()
-
   const { sub: userId } = request.user
 
   const { authorization } = request.headers
@@ -39,7 +38,7 @@ const logout = async (request: FastifyRequest, reply: FastifyReply) => {
 
   const disabled = await SessionToken.disableToken({ token, userId })
 
-  reply.status(httpStatus.OK).send({ disabled })
+  return reply.status(httpStatus.OK).send({ disabled })
 }
 
 export const AuthController = {
