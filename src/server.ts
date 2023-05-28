@@ -4,7 +4,7 @@ import { errorHandler } from "./error/errorHandler";
 import fastifyJwt from "@fastify/jwt";
 import { onRequestHook } from "./hooks/onRequest";
 import { userRoutes } from "./routes/user";
-import { marketplaceRoutes } from "./routes/marketplace";
+import { shoppingListRoutes } from "./routes/shoppingList";
 
 const app = fastify()
 
@@ -12,7 +12,7 @@ app.register(fastifyJwt, { secret: "b4d secr3T!123@@" })
 
 app.register(authRoutes)
 app.register(userRoutes)
-app.register(marketplaceRoutes)
+app.register(shoppingListRoutes)
 
 app.setErrorHandler(errorHandler)
 

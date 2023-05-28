@@ -60,10 +60,27 @@ const insertNewItemsOnShoppingList = async (userId: string, data: InsertItemsOnS
 
 const getShoppingListByUserId = async (userId: string) => {
   const shoppingList = await prisma.shoppingList.findMany({
-    where: { user_id: userId }
+    where: { user_id: userId },
+    include: {
+      _count: {
+        select: {
+          ProductsOnShoppingList: true
+        }
+      }
+    }
   })
 
-  return shoppingList
+  const mappedList = shoppingList.map(({ id, name, user_id, _count, date }) => {
+    return {
+      id,
+      name,
+      date,
+      userId: user_id,
+      length: _count.ProductsOnShoppingList
+    }
+  })
+
+  return mappedList
 }
 
 const getShoppingListById = async (id: string) => {
