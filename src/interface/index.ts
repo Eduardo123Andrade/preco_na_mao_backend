@@ -6,3 +6,4 @@ export { MarketplaceList } from "./marketplaceList"
 export { MarketplaceListProducts } from "./marketplaceListProducts.interface"
 export { UpdatePassword } from "./updatePassword.interface"
 export { UpdateUser } from "./updateUser.interface"
+export { UserData } from './userData.interface';

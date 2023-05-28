@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import httpStatus from "http-status";
 import { SessionToken, AuthService } from "../service";
 import { validateLoginBodySchema, validateSingUpSchemaBody } from "../validation";
+import { userView } from "../view/userView";
 
 
 const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -9,7 +10,9 @@ const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
 
   const user = await AuthService.auth(data)
 
-  return reply.status(httpStatus.CREATED).send({ user })
+  const response = userView(user)
+
+  return reply.status(httpStatus.CREATED).send(response)
 }
 
 
@@ -21,9 +24,9 @@ const login = async (request: FastifyRequest, reply: FastifyReply, app: FastifyI
   const createdToken = app.jwt.sign({ name: user.name, }, { sub: user.id, expiresIn: "10 days" })
 
   const { token } = await SessionToken.createToken({ token: createdToken, userId: user.id })
-  const { password, ...rest } = user
+  const response = userView(user)
 
-  return reply.status(httpStatus.OK).send({ token, ...rest })
+  return reply.status(httpStatus.OK).send({ token, ...response })
 }
 
 const logout = async (request: FastifyRequest, reply: FastifyReply) => {
