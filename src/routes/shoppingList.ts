@@ -3,7 +3,7 @@ import { ShoppingListController } from "../controller";
 
 
 
-export const marketplaceRoutes = async (app: FastifyInstance) => {
+export const shoppingListRoutes = async (app: FastifyInstance) => {
   app.get("/shopping-list", ShoppingListController.getAllList)
   app.get("/shopping-list/:shoppingListId", ShoppingListController.getListById)
 

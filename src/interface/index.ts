@@ -6,3 +6,4 @@ export { ShoppingList } from "./shoppingList"
 export { ShoppingListProducts } from "./shoppingListProducts.interface"
 export { UpdatePassword } from "./updatePassword.interface"
 export { UpdateUser } from "./updateUser.interface"
+export { UserData } from './userData.interface';

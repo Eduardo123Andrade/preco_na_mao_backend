@@ -47,9 +47,10 @@ model Product {
 }
 
 model ShoppingList {
-  id      String @id @default(uuid())
+  id      String   @id @default(uuid())
   name    String
   user_id String
+  date    DateTime @default(now())
 
   user                   User                     @relation(fields: [user_id], references: [id])
   ProductsOnShoppingList ProductsOnShoppingList[]

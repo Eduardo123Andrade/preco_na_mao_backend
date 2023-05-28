@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import httpStatus from "http-status";
 import { SessionToken, AuthService } from "../service";
 import { validateLoginBodySchema, validateSingUpSchemaBody } from "../validation";
+import { userView } from "../view";
 
 
 const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -9,7 +10,9 @@ const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
 
   const user = await AuthService.auth(data)
 
-  return reply.status(httpStatus.CREATED).send({ user })
+  const response = userView(user)
+
+  return reply.status(httpStatus.CREATED).send(response)
 }
 
 
@@ -21,13 +24,12 @@ const login = async (request: FastifyRequest, reply: FastifyReply, app: FastifyI
   const createdToken = app.jwt.sign({ name: user.name, }, { sub: user.id, expiresIn: "10 days" })
 
   const { token } = await SessionToken.createToken({ token: createdToken, userId: user.id })
+  const response = userView(user)
 
-  return reply.status(httpStatus.OK).send({ user, token })
+  return reply.status(httpStatus.OK).send({ token, ...response })
 }
 
 const logout = async (request: FastifyRequest, reply: FastifyReply) => {
-  await request.jwtVerify()
-
   const { sub: userId } = request.user
 
   const { authorization } = request.headers
@@ -39,7 +41,7 @@ const logout = async (request: FastifyRequest, reply: FastifyReply) => {
 
   const disabled = await SessionToken.disableToken({ token, userId })
 
-  reply.status(httpStatus.OK).send({ disabled })
+  return reply.status(httpStatus.OK).send({ disabled })
 }
 
 export const AuthController = {
