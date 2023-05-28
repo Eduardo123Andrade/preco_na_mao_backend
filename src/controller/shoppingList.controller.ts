@@ -35,7 +35,7 @@ const insertItemsOnShoppingList = async (request: FastifyRequest, reply: Fastify
   const { sub: userId } = request.user
   const shoppingListData = validateInsertItemsShoppingListBodySchema(request.body)
 
-  const shoppingList = await ShoppingListService.insertNewItemsOnShoppingList(userId, shoppingListData)
+  const shoppingList = await ShoppingListService.insertOrUpdateItems(userId, shoppingListData)
 
   return reply.status(httpStatus.OK).send(shoppingList)
 }
