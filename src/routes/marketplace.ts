@@ -1,12 +1,12 @@
 import { FastifyInstance } from "fastify";
-import { MarketplaceListController } from "../controller";
+import { ShoppingListController } from "../controller";
 
 
 
 export const marketplaceRoutes = async (app: FastifyInstance) => {
-  app.get("/marketplace-list", MarketplaceListController.getAllList)
-  app.get("/marketplace-list/:marketplaceListId", MarketplaceListController.getListById)
+  app.get("/shopping-list", ShoppingListController.getAllList)
+  app.get("/shopping-list/:shoppingListId", ShoppingListController.getListById)
 
-  app.post("/marketplace-list", MarketplaceListController.create)
-  app.put("/marketplace-list", MarketplaceListController.insertItemsOnMarketplaceList)
+  app.post("/shopping-list", ShoppingListController.create)
+  app.put("/shopping-list", ShoppingListController.insertItemsOnShoppingList)
 }

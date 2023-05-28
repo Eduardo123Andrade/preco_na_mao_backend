@@ -1,5 +1,5 @@
 import { BadRequestError } from '../error/BadRequestError';
-import { MarketplaceListProducts } from '../interface/marketplaceListProducts.interface';
+import { MarketplaceListProducts } from '../interface/shoppingListProducts.interface';
 import { prisma } from '../lib/prisma';
 
 
