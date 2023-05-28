@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import httpStatus from "http-status";
 import { SessionToken, AuthService } from "../service";
 import { validateLoginBodySchema, validateSingUpSchemaBody } from "../validation";
-import { userView } from "../view/userView";
+import { userView } from "../view";
 
 
 const signUp = async (request: FastifyRequest, reply: FastifyReply) => {
