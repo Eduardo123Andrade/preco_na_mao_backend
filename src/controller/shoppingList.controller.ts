@@ -15,6 +15,15 @@ const create = async (request: FastifyRequest, reply: FastifyReply) => {
   return reply.status(httpStatus.OK).send(shoppingList)
 }
 
+const deleteShoppingList = async (request: FastifyRequest, reply: FastifyReply) => {
+  const { shoppingListId } = request.params as any
+
+  const shoppingList = await ShoppingListService.deleteShoppingList(shoppingListId)
+
+  return reply.status(httpStatus.OK).send(shoppingList)
+}
+
+
 const getAllList = async (request: FastifyRequest, reply: FastifyReply) => {
   const { sub: userId } = request.user
 
@@ -42,6 +51,7 @@ const insertItemsOnShoppingList = async (request: FastifyRequest, reply: Fastify
 
 export const ShoppingListController = {
   create,
+  deleteShoppingList,
   getAllList,
   getListById,
   insertItemsOnShoppingList

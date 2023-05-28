@@ -1,7 +1,9 @@
+import { throws } from "assert"
 import { NotFoundError } from "../error/NotFoundError"
 import { InsertItemsOnShoppingList, ShoppingList } from "../interface"
 import { prisma } from "../lib/prisma"
 import { ProductService } from "./product.service"
+import { BadRequestError } from "../error/BadRequestError"
 
 const formatProductsToSave = (data: ShoppingList | InsertItemsOnShoppingList) => {
   const mappedList = data.products.map(item => {
@@ -29,6 +31,19 @@ const createShoppingList = async (userId: string, data: ShoppingList) => {
       }
     }
   })
+
+  return result
+}
+
+const deleteShoppingList = async (id: string) => {
+  const result = await prisma.shoppingList.delete({
+    where: {
+      id
+    }
+  })
+    .catch(() => {
+      throw new BadRequestError("Parametros inválidos")
+    })
 
   return result
 }
@@ -129,6 +144,7 @@ const insertOrUpdateItems = async (userId: string, data: InsertItemsOnShoppingLi
 
 export const ShoppingListService = {
   createShoppingList,
+  deleteShoppingList,
   getShoppingListById,
   getShoppingListByUserId,
   insertOrUpdateItems
