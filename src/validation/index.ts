@@ -1,7 +1,7 @@
 
 export { validateCheckPasswordValidationBodySchema } from "./checkPassword.validation"
-export { validateMarketPlaceListBodySchema } from "./createMarketplaceList"
-export { validateInsertItemsMarketPlaceListBodySchema } from "./insertItemsOnMarketplaceList.validation"
+export { validateShoppingListBodySchema } from "./createShoppingList"
+export { validateInsertItemsShoppingListBodySchema } from "./insertItemsOnShoppingList.validation"
 export { validateLoginBodySchema } from "./loginBody.validation"
 export { validateSingUpSchemaBody } from "./singUpBody.validation"
 export { validateUpdatePasswordBodySchema } from "./updatePasswordBody.validation"

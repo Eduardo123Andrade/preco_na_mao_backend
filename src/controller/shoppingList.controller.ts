@@ -1,12 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import httpStatus from 'http-status';
 import { ShoppingListService } from "../service";
-import { validateInsertItemsMarketPlaceListBodySchema, validateMarketPlaceListBodySchema } from "../validation";
+import { validateInsertItemsShoppingListBodySchema, validateShoppingListBodySchema } from "../validation";
 
 
 const create = async (request: FastifyRequest, reply: FastifyReply) => {
   const { sub: userId } = request.user
-  const shoppingListData = validateMarketPlaceListBodySchema(request.body)
+  const { name } = validateShoppingListBodySchema(request.body)
+
+  const shoppingListData = { name, products: [] }
 
   const shoppingList = await ShoppingListService.createShoppingList(userId, shoppingListData)
 
@@ -31,7 +33,7 @@ const getListById = async (request: FastifyRequest, reply: FastifyReply) => {
 
 const insertItemsOnShoppingList = async (request: FastifyRequest, reply: FastifyReply) => {
   const { sub: userId } = request.user
-  const shoppingListData = validateInsertItemsMarketPlaceListBodySchema(request.body)
+  const shoppingListData = validateInsertItemsShoppingListBodySchema(request.body)
 
   const shoppingList = await ShoppingListService.insertNewItemsOnShoppingList(userId, shoppingListData)
 
