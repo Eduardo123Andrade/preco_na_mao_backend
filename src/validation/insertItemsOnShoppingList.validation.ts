@@ -1,10 +1,9 @@
 import { z } from "zod";
-import { MarketplaceList } from "../interface";
+import { InsertItemsOnShoppingList } from "../interface";
 
-
-export const validateMarketPlaceListBodySchema = (data: unknown): MarketplaceList => {
+export const validateInsertItemsShoppingListBodySchema = (data: unknown): InsertItemsOnShoppingList => {
   const bodySchema = z.object({
-    name: z.string(),
+    listId: z.string(),
     products: z.array(z.object({
       id: z.string(),
       quantity: z.number().gte(0)
