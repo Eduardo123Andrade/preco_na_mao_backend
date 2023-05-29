@@ -17,8 +17,8 @@ model User {
   phoneNumber String
   password    String
 
-  SessionToken    SessionToken[]
-  MarketplaceList ShoppingList[]
+  SessionToken SessionToken[]
+  ShoppingList ShoppingList[]
 }
 
 model SessionToken {
@@ -27,7 +27,7 @@ model SessionToken {
   user_id String
   isValid Boolean @default(true)
 
-  user User @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Marketplace {
@@ -52,7 +52,7 @@ model ShoppingList {
   user_id String
   date    DateTime @default(now())
 
-  user                   User                     @relation(fields: [user_id], references: [id])
+  user                   User                     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   ProductsOnShoppingList ProductsOnShoppingList[]
 }
 
