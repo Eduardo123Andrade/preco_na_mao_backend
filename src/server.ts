@@ -1,12 +1,8 @@
-import fastify from "fastify";
-import { authRoutes } from "./routes/auth";
-import { errorHandler } from "./error/errorHandler";
 import fastifyJwt from "@fastify/jwt";
+import fastify from "fastify";
+import { errorHandler } from "./error/errorHandler";
 import { onRequestHook } from "./hooks/onRequest";
-import { userRoutes } from "./routes/user";
-import { shoppingListRoutes } from "./routes/shoppingList";
-import { marketplaceRoutes } from "./routes/marketplace";
-import { productRoutes } from "./routes/products";
+import { authRoutes, marketplaceRoutes, productRoutes, shoppingListRoutes, userRoutes, } from "./routes";
 
 const app = fastify()
 
@@ -21,7 +17,6 @@ app.register(shoppingListRoutes)
 app.setErrorHandler(errorHandler)
 
 app.addHook("onRequest", onRequestHook)
-
 
 app.listen({
   port: 3333,
